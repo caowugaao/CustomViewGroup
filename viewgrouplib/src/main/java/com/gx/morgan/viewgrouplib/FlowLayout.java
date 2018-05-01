@@ -18,6 +18,10 @@ import java.util.List;
 public class FlowLayout extends CustomViewGroup {
 
     private static final String TAG = "FlowLayout";
+    private List<List<ChildInfo>> totalViews;
+    private List<ChildInfo> rowViews;
+    private List<Integer> lineHeights;
+
     public FlowLayout(Context context) {
         super(context);
         init(context, null);
@@ -72,18 +76,24 @@ public class FlowLayout extends CustomViewGroup {
             childWidthWithMargin = childInfo.measuredWidth + layoutParams.leftMargin + layoutParams.rightMargin;
             childHeightWithMargin = childInfo.measuredHeight + layoutParams.topMargin + layoutParams.bottomMargin;
 
-            Log.e(TAG, "onMeasureChildrenSize: childWidthWithMargin="+childWidthWithMargin+",childHeightWithMargin="+childHeightWithMargin );
-
-            if (lineWidth + childWidthWithMargin > maxWidth) {//超过最大宽度
-                totalWidth = Math.max(lineWidth, totalWidth);
-            } else {
-                lineWidth += childWidthWithMargin;
-            }
 
             if (lineHeight + childHeightWithMargin > maxHeight) {//超过最大高度
                 totalHeight = Math.max(lineHeight, totalHeight);
+//                Log.e(TAG, "onMeasureChildrenSize: 超过最大高度 i="+i );
             } else {
-                lineHeight += childHeightWithMargin;
+                if (lineWidth + childWidthWithMargin > maxWidth) {//超过最大宽度
+                    totalWidth = Math.max(lineWidth, totalWidth);
+//                    Log.e(TAG, "onMeasureChildrenSize: 超过最大宽度 i="+i );
+                    lineWidth=childWidthWithMargin;
+                    lineHeight += childHeightWithMargin;
+                } else {
+                    lineWidth += childWidthWithMargin;
+//                    Log.e(TAG, "onMeasureChildrenSize:  i="+i );
+                    if(0==lineHeight){
+                        lineHeight=childHeightWithMargin;
+                    }
+                }
+
             }
 
             //加上最后一个
@@ -94,14 +104,29 @@ public class FlowLayout extends CustomViewGroup {
 
         }
 
+        Log.e(TAG, "onMeasureChildrenSize: totalWidth="+totalWidth+",totalHeight="+totalHeight +",lineWidth="+lineWidth+",lineHeight="+lineHeight);
+
         return new int[]{totalWidth, totalHeight};
     }
 
     private void init(Context context, AttributeSet attrs) {
+        totalViews = new ArrayList<>();
+        rowViews = new ArrayList<>();
+        lineHeights = new ArrayList<>();
+    }
+
+    private static <T>void clearList(List<T> list){
+        if(null!=list){
+            list.clear();
+        }
     }
 
     @Override
     protected void onDetachedFromWindow() {
+        clearList(totalViews);
+        clearList(rowViews);
+        clearList(lineHeights);
+
         super.onDetachedFromWindow();
 
     }
@@ -110,6 +135,7 @@ public class FlowLayout extends CustomViewGroup {
     protected void onChildLayout(SparseArray<ChildInfo> childInfos, boolean changed, int l, int t, int r, int b) {
 
 
+        Log.e(TAG, "onChildLayout: childInfos‘size="+childInfos.size() );
         CustomLayoutParams layoutParams;
         int width = getWidth();
         int height = getHeight();
@@ -120,21 +146,27 @@ public class FlowLayout extends CustomViewGroup {
         int childHeightWithMargin = 0;
         int lineWidth = 0;
 
+        totalViews.clear();
+        rowViews.clear();
+        lineHeights.clear();
 
-        List<List<ChildInfo>> totalViews = new ArrayList<>();
-        List<ChildInfo> rowViews = new ArrayList<>();
-        List<Integer> lineHeights=new ArrayList<>();
 
         for (int i = 0, childCount = getChildCount(); i < childCount; i++) {
             ChildInfo childInfo = childInfos.get(i);
             if (null == childInfo || View.GONE == childInfo.visible) {
+                if(childCount-1==i){
+                    totalViews.add(rowViews);
+                    lineHeights.add(childHeightWithMargin);
+                }
                 continue;
             }
             layoutParams = childInfo.layoutParams;
             childWidthWithMargin = childInfo.measuredWidth + layoutParams.leftMargin + layoutParams.rightMargin;
             childHeightWithMargin=childInfo.measuredHeight+layoutParams.topMargin+layoutParams.bottomMargin;
 
+
             if (lineWidth + childWidthWithMargin > contentWidth) {//大于最大内容宽度
+
                 totalViews.add(rowViews);
 
                 rowViews = new ArrayList<>();
@@ -144,14 +176,17 @@ public class FlowLayout extends CustomViewGroup {
                 lineHeights.add(childHeightWithMargin);
 
             } else {
+
                 rowViews.add(childInfo);
                 lineWidth += childWidthWithMargin;
 
-                if(childCount-1==i){//最后一个
-                    totalViews.add(rowViews);
-                    lineHeights.add(childHeightWithMargin);
-                }
             }
+
+            if(childCount-1==i){
+                totalViews.add(rowViews);
+                lineHeights.add(childHeightWithMargin);
+            }
+
         }
 
 
@@ -165,7 +200,7 @@ public class FlowLayout extends CustomViewGroup {
 
 
         int rowsNum = totalViews.size();
-        Log.e(TAG, "onChildLayout: rowsNum="+rowsNum);
+        Log.e(TAG, "onChildLayout: totalViews.size="+totalViews.size()+",lineHeights.size="+lineHeights.size());
         for (int i = 0 ; i < rowsNum; i++) {
             List<ChildInfo> rows = totalViews.get(i);
             Integer childLineHeight = lineHeights.get(i);
