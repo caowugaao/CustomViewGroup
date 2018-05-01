@@ -188,8 +188,9 @@ public class FlowLayout extends CustomViewGroup {
         if(null==rowViews||rowViews.isEmpty()){
             return 0;
         }
-        int max=rowViews.get(0).measuredHeight;
-        CustomLayoutParams layoutParams=null;
+        ChildInfo firstChildInfo = rowViews.get(0);
+        CustomLayoutParams layoutParams=firstChildInfo.layoutParams;
+        int max=firstChildInfo.measuredHeight+layoutParams.topMargin+layoutParams.bottomMargin;
         for (int i = 1,size=rowViews.size(); i <size ; i++) {
             ChildInfo childInfo = rowViews.get(i);
             layoutParams=childInfo.layoutParams;
