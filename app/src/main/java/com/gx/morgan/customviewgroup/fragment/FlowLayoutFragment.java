@@ -72,11 +72,11 @@ public class FlowLayoutFragment extends Fragment {
             }
             else {
                 if(((i+1)%3==0)){
-                    int layoutSize = (int) ViewUtil.dp2px(activity, 50);
+                    int layoutSize = (int) ViewUtil.dp2px(activity, 80);
                     textView=getTextView(String.valueOf(i + 1),layoutSize,android.R.color.holo_green_dark);
                 }
                 else if((i+1)%2==0){
-                    int layoutSize = (int) ViewUtil.dp2px(activity, 80);
+                    int layoutSize = (int) ViewUtil.dp2px(activity, 100);
                     textView=getTextView(String.valueOf(i + 1),layoutSize,android.R.color.holo_orange_dark);
                 }
                 else{
