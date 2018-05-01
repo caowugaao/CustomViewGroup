@@ -107,6 +107,8 @@ public abstract class CustomViewGroup extends ViewGroup {
             childWidth = child.getMeasuredWidth();
             childHeight = child.getMeasuredHeight();
 
+            childWidth=0==childWidth?childLayoutParams.width:childWidth;
+            childHeight=0==childHeight?childLayoutParams.height:childHeight;
 
             ChildInfo childInfo = new ChildInfo(childLayoutParams, childWidth, childHeight, i, childVisibility, child);
             childInfos.put(i, childInfo);

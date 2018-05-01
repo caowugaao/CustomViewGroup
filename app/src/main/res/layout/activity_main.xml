@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.gx.morgan.viewgrouplib.FlowLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/colorAccent"
-        app:layout_constraintTop_toTopOf="parent">
+    <com.gx.morgan.customviewgroup.view.SlidingTab
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@android:color/white"
+        app:pstsDividerColorWe="@android:color/black"
+        app:pstsIndicatorColorWe="@color/colorPrimary"
+        app:pstsIndicatorHeightWe="2dp"
+        app:pstsUnderlineColorWe="@android:color/white"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
 
 
-        <TextView
-            style="@style/CustomTextView"
-            android:text="1"
-            />
-
-        <TextView
-            style="@style/CustomTextView"
-            android:text="2"/>
-
-        <TextView
-            style="@style/CustomTextView"
-            android:text="3"/>
-
-        <TextView
-            style="@style/CustomTextView"
-            android:visibility="gone"
-            android:text="4"/>
-
-        <TextView
-            style="@style/CustomTextView"
-            android:text="5"/>
-
-    </com.gx.morgan.viewgrouplib.FlowLayout>
-
-</android.support.constraint.ConstraintLayout>
