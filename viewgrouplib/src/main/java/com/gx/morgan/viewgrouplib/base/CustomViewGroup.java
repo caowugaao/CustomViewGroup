@@ -1,4 +1,4 @@
-package com.gx.morgan.viewgrouplib;
+package com.gx.morgan.viewgrouplib.base;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -136,6 +136,16 @@ public abstract class CustomViewGroup extends ViewGroup {
 
     protected void onChildVisibilityGone(View child, int index, ViewGroup parent) {
 
+    }
+
+    protected int getChildHorizontalSpaceInParent(ChildInfo childInfo){
+        CustomLayoutParams layoutParams = childInfo.layoutParams;
+        return layoutParams.leftMargin+childInfo.measuredWidth+layoutParams.rightMargin;
+    }
+
+    protected int getChildVerticalSpaceInParent(ChildInfo childInfo){
+        CustomLayoutParams layoutParams = childInfo.layoutParams;
+        return layoutParams.topMargin+childInfo.measuredHeight+layoutParams.bottomMargin;
     }
 
     @Override
