@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gx.morgan.customviewgroup.R;
-import com.gx.morgan.viewgrouplib.CustomViewGroup;
+import com.gx.morgan.viewgrouplib.base.CustomViewGroup;
 import com.gx.morgan.viewgrouplib.FlowLayout;
 import com.gx.morgan.viewgrouplib.utils.ViewUtil;
 

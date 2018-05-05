@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Window;
 
 import com.gx.morgan.customviewgroup.adapter.CommonFragmentPagerAdapter;
 import com.gx.morgan.customviewgroup.fragment.FlowLayoutFragment;
-import com.gx.morgan.customviewgroup.fragment.TestFragment;
+import com.gx.morgan.customviewgroup.fragment.StateSwitchLayoutFragment;
 import com.gx.morgan.customviewgroup.view.SlidingTab;
 import com.gx.morgan.viewgrouplib.FlowLayout;
+import com.gx.morgan.viewgrouplib.StateSwitchLayout;
 import com.gx.morgan.viewgrouplib.utils.ViewUtil;
 
 import java.util.ArrayList;
@@ -33,20 +32,13 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
 
         ViewPager viewPager=findViewById(R.id.viewPager);
-        LayoutInflater inflater = getLayoutInflater();
-
-        View flowLayoutView = inflater.inflate(R.layout.layout_flowlayout, null);
-        FlowLayout flowLayout=flowLayoutView .findViewById(R.id.flowLayout);
-
-
-
         List<Fragment> fragments=new ArrayList<>(2);
         fragments.add(new FlowLayoutFragment());
-        fragments.add(new TestFragment());
+        fragments.add(new StateSwitchLayoutFragment());
 
         List<String> titles=new ArrayList<>(2);
         titles.add(FlowLayout.class.getSimpleName());
-        titles.add("test");
+        titles.add(StateSwitchLayout.class.getSimpleName());
 
         CommonFragmentPagerAdapter adapter=new CommonFragmentPagerAdapter(getSupportFragmentManager(),fragments,titles);
         viewPager.setAdapter(adapter);

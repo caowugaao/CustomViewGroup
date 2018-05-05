@@ -3,6 +3,7 @@ package com.gx.morgan.viewgrouplib.utils;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.TypedValue;
+import android.view.View;
 
 /**
  * description：
@@ -61,6 +62,10 @@ public class ViewUtil {
     public static float sp(Context context,float dp){
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, dp, context.getResources().getDisplayMetrics());
     }
-
+    public static void setVisible(View view, int visible) {
+        if (null != view && visible != view.getVisibility()) {
+            view.setVisibility(visible);
+        }
+    }
 
 }
