@@ -33,7 +33,7 @@ public class StateSwitchLayout extends CustomViewGroup {
     private OnInitializeListener onInitializeListener;
     private OnStateViewClickListener onStateViewClickListener;
     private OnSwitchListener onSwitchListener;
-    private boolean switchAnimate = true;
+//    private boolean switchAnimate = true;
     private int currentState = -1;
     private int oldState = -1;
     private LayoutInflater inflater;
@@ -110,7 +110,7 @@ public class StateSwitchLayout extends CustomViewGroup {
         private OnInitializeListener onInitializeListener;
         private OnStateViewClickListener onStateViewClickListener;
         private OnSwitchListener onSwitchListener;
-        private boolean switchAnimate;
+//        private boolean switchAnimate;
 
         public Builder(@NonNull Context context) {
             CommonUtil.checkNull(context, "context");
@@ -193,10 +193,10 @@ public class StateSwitchLayout extends CustomViewGroup {
             return this;
         }
 
-        public Builder setSwitchAnimate(boolean switchAnimate) {
-            this.switchAnimate = switchAnimate;
-            return this;
-        }
+//        public Builder setSwitchAnimate(boolean switchAnimate) {
+//            this.switchAnimate = switchAnimate;
+//            return this;
+//        }
 
         public StateSwitchLayout build() {
             return new StateSwitchLayout(this);
@@ -210,7 +210,7 @@ public class StateSwitchLayout extends CustomViewGroup {
         onInitializeListener = builder.onInitializeListener;
         onStateViewClickListener = builder.onStateViewClickListener;
         onSwitchListener = builder.onSwitchListener;
-        switchAnimate = builder.switchAnimate;
+//        switchAnimate = builder.switchAnimate;
     }
 
     public StateSwitchLayout(Context context) {
@@ -289,13 +289,13 @@ public class StateSwitchLayout extends CustomViewGroup {
         onSwitchListener = listener;
     }
 
-    public void setSwitchAnimate(boolean switchAnimate) {
-        this.switchAnimate = switchAnimate;
-    }
+//    public void setSwitchAnimate(boolean switchAnimate) {
+//        this.switchAnimate = switchAnimate;
+//    }
 
-    public boolean isSwitchAnimate() {
-        return switchAnimate;
-    }
+//    public boolean isSwitchAnimate() {
+//        return switchAnimate;
+//    }
 
     public void showContentView() {
         show(State.CONTENT);
@@ -363,8 +363,11 @@ public class StateSwitchLayout extends CustomViewGroup {
                 onInitializeListener.onInitialize(willShowState, willShowView);
             }
             isInitializes.put(willShowState, true);
-            willShowView.setTag(CLICK_TAG, willShowState);
-            willShowView.setOnClickListener(customViewClickListener);
+
+            if(null!=onStateViewClickListener){
+                willShowView.setTag(CLICK_TAG, willShowState);
+                willShowView.setOnClickListener(customViewClickListener);
+            }
         }
 
         oldState = currentState;
