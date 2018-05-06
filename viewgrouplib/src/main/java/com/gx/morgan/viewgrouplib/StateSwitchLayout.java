@@ -440,16 +440,16 @@ public class StateSwitchLayout extends CustomViewGroup {
             throw new RuntimeException("ShowIndex must less than childInfos’size.ChildInfos’size is "+childInfos.size()+",however showIndex is "+showIndex);
         }
 
-        int width = getWidth();
-        int height = getHeight();
+        int contentWidth = getWidth()-getPaddingLeft()-getPaddingRight();
+        int contentHeight = getHeight()-getPaddingTop()-getPaddingBottom();
 
         ChildInfo childInfo = childInfos.get(showIndex);
         CustomLayoutParams layoutParams = childInfo.layoutParams;
         int childHorizontalSpaceInParent = getChildHorizontalSpaceInParent(childInfo);
         int childVerticalSpaceInParent = getChildVerticalSpaceInParent(childInfo);
 
-        int childLeft = (width -childHorizontalSpaceInParent)/2 +layoutParams.rightMargin;
-        int childTop = (height-childVerticalSpaceInParent)/2+layoutParams.topMargin;
+        int childLeft = (contentWidth -childHorizontalSpaceInParent)/2 +layoutParams.rightMargin;
+        int childTop = (contentHeight-childVerticalSpaceInParent)/2+layoutParams.topMargin;
         int childRight = childLeft+childInfo.measuredWidth;
         int childBottom = childTop+childInfo.measuredHeight;
         childInfo.view.layout(childLeft, childTop, childRight, childBottom);
