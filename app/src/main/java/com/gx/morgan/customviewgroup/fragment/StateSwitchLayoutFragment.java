@@ -95,6 +95,16 @@ public class StateSwitchLayoutFragment extends Fragment {
                 .setOnStateViewClickListener(onStateViewClickListener)
                 .setOnSwitchListener(onSwitchListener)
                 .build();
+//        stateSwitchLayout = new StateSwitchLayout
+//                .Builder(context)
+//                .setContentView(contentView)
+//                .setErrorLayoutRes(R.layout.layout_error)
+//                .setLoadingLayoutRes(R.layout.layout_loading)
+//                .setEmptyLayoutRes(R.layout.layout_empty)
+//                .setOnInitializeListener(onInitializeListener)
+//                .setOnStateViewClickListener(onStateViewClickListener)
+//                .setOnSwitchListener(onSwitchListener)
+//                .build();
 
         int stateSwitchLayoutId = R.id.stateSwitchLayout;
         this.stateSwitchLayout.setId(stateSwitchLayoutId);
